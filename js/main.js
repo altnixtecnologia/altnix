@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
       segment_tag_3: 'WhatsApp',
       bot_title: 'Bot Teste no Site',
       bot_subtitle: 'Uma experiência real, sem enrolação. Clique, teste e avance.',
-      bot_hint: 'Clique em iniciar e escolha uma opção numerada.',
+      bot_hint: 'Clique em iniciar para simular o atendimento.',
       bot_start: 'Iniciar teste',
       bot_status_ready: 'Pronto',
       bot_status_live: 'Online',
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
       segment_tag_3: 'WhatsApp',
       bot_title: 'Bot Test On Site',
       bot_subtitle: 'A real experience. Click, test, and move forward.',
-      bot_hint: 'Click start and choose a numbered option.',
+      bot_hint: 'Click start to simulate the service.',
       bot_start: 'Start test',
       bot_status_ready: 'Ready',
       bot_status_live: 'Online',
@@ -313,6 +313,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const botFeed = document.getElementById('bot-feed');
   const botStatus = document.getElementById('bot-status');
   const botStart = document.getElementById('bot-start');
+  const botInputWrap = document.getElementById('bot-input-wrap');
+  const botInput = document.getElementById('bot-input');
+  const botSend = document.getElementById('bot-send');
   const menuButtons = Array.from(document.querySelectorAll('[data-bot-index]'));
   const revealTargets = document.querySelectorAll(
     '.card, .stage-card, .step, .segment-panel, .mvi-panel, .hero-card, .bot-shell, .cta-card'
@@ -324,8 +327,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentMenu = 'main';
   const botState = {
     flow: null,
-    item: null
+    item: null,
+    userName: null
   };
+  const statusTimers = [];
 
   const updateHeaderOffset = () => {
     if (!headerEl) {
@@ -370,6 +375,13 @@ document.addEventListener('DOMContentLoaded', () => {
     botStatus.textContent = i18n[currentLang][key] || key;
   };
 
+  const t = (pt, en) => (currentLang === 'pt' ? pt : en);
+
+  const clearStatusTimers = () => {
+    statusTimers.forEach((id) => clearTimeout(id));
+    statusTimers.length = 0;
+  };
+
   const setMenu = (menuKey) => {
     const options = (menus[currentLang] && menus[currentLang][menuKey]) || [];
     currentMenu = menuKey;
@@ -403,8 +415,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const resetBot = () => {
     botFeed.innerHTML = '';
     botStarted = false;
+    botState.userName = null;
+    botState.item = null;
+    botState.flow = null;
+    clearStatusTimers();
     setBotStatus('bot_status_ready');
     setMenu('main');
+    botStart.classList.remove('is-hidden');
+    botInputWrap.classList.add('is-hidden');
+    botInput.value = '';
     appendMessage(i18n[currentLang].bot_msg_prompt, 'bot', true);
   };
 
@@ -425,19 +444,60 @@ document.addEventListener('DOMContentLoaded', () => {
     botStarted = true;
     setBotStatus('bot_status_connecting');
     botFeed.innerHTML = '';
+    clearStatusTimers();
+    botStart.classList.add('is-hidden');
+    botInputWrap.classList.remove('is-hidden');
     setTimeout(() => {
       setBotStatus('bot_status_live');
       setMenu('main');
       queueMessages([
         { text: i18n[currentLang].bot_msg_hello, who: 'bot' },
-        { text: i18n[currentLang].bot_msg_prompt, who: 'bot' }
+        { text: t('Antes de continuar, me diz seu nome?', 'Before we start, what is your name?'), who: 'bot' }
       ]);
     }, 400);
+  };
+
+  const sendName = () => {
+    if (!botStarted) {
+      return;
+    }
+    const name = (botInput.value || '').trim();
+    if (!name) {
+      appendMessage(t('Digite seu nome para continuar.', 'Please type your name to continue.'), 'bot', true);
+      return;
+    }
+    botState.userName = name;
+    appendMessage(name, 'user');
+    botInput.value = '';
+    botInputWrap.classList.add('is-hidden');
+    queueMessages([
+      { text: t(`Prazer, ${name}.`, `Nice to meet you, ${name}.`), who: 'bot' },
+      { text: i18n[currentLang].bot_msg_prompt, who: 'bot' }
+    ]);
   };
 
   const openWhatsApp = (text) => {
     const url = `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank', 'noopener');
+  };
+
+  const generateId = (prefix) => {
+    const num = Math.floor(Math.random() * 9000) + 1000;
+    return `${prefix}-${num}`;
+  };
+
+  const scheduleStatus = (messages, delayMs) => {
+    messages.forEach((message, index) => {
+      const id = setTimeout(() => {
+        appendMessage(message, 'bot');
+      }, delayMs * (index + 1));
+      statusTimers.push(id);
+    });
+  };
+
+  const summarizeCustomer = (extra) => {
+    const name = botState.userName || t('Cliente', 'Customer');
+    return t(`Cliente: ${name}. ${extra}`, `Customer: ${name}. ${extra}`);
   };
 
   const handleAction = (action) => {
@@ -460,6 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (action === 'food') {
         botState.flow = 'food';
         botState.item = null;
+        clearStatusTimers();
         queueMessages([{ text: currentLang === 'pt' ? 'Pedido de comida selecionado. Escolha o item:' : 'Food order selected. Choose an item:', who: 'bot' }]);
         setMenu('food');
         return;
@@ -473,6 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         botState.flow = 'food';
         botState.item = itemMap[action] || 'Item';
+        clearStatusTimers();
         const reply = currentLang === 'pt'
           ? `Pedido simulado: ${botState.item} + bebida. Tempo estimado 35 min.`
           : `Simulated order: ${botState.item} + drink. Estimated time 35 min.`;
@@ -482,11 +544,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (action === 'food_confirm') {
-        const text = currentLang === 'pt'
-          ? `Pedido teste: ${botState.item || 'Item'} + bebida. Pode seguir?`
-          : `Test order: ${botState.item || 'Item'} + drink. Can we proceed?`;
-        queueMessages([{ text: currentLang === 'pt' ? 'Abrindo WhatsApp para confirmar o pedido.' : 'Opening WhatsApp to confirm the order.', who: 'bot' }]);
-        openWhatsApp(text);
+        clearStatusTimers();
+        const orderId = generateId('PED');
+        queueMessages([
+          { text: t(`Pedido ${orderId} gerado.`, `Order ${orderId} created.`), who: 'bot' },
+          { text: t('Seu pedido está sendo preparado.', 'Your order is being prepared.'), who: 'bot' }
+        ]);
+        scheduleStatus(
+          [
+            t('Seu pedido ficou pronto.', 'Your order is ready.'),
+            t('Saiu para entrega.', 'Out for delivery.')
+          ],
+          5000
+        );
+        scheduleStatus(
+          [summarizeCustomer(t(`Item: ${botState.item || 'Item'}.`, `Item: ${botState.item || 'Item'}.`))],
+          12000
+        );
         setMenu('main');
         return;
       }
@@ -500,6 +574,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (action === 'support') {
         botState.flow = 'support';
         botState.item = null;
+        clearStatusTimers();
         queueMessages([{ text: currentLang === 'pt' ? 'Suporte técnico selecionado. Qual problema?' : 'Tech support selected. What issue?', who: 'bot' }]);
         setMenu('support');
         return;
@@ -513,6 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         botState.flow = 'support';
         botState.item = issueMap[action] || (currentLang === 'pt' ? 'Problema' : 'Issue');
+        clearStatusTimers();
         const reply = currentLang === 'pt'
           ? `Entendi. Abriremos um chamado para: ${botState.item}.`
           : `Got it. We'll open a ticket for: ${botState.item}.`;
@@ -522,11 +598,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (action === 'support_confirm') {
-        const text = currentLang === 'pt'
-          ? `Suporte teste: ${botState.item || 'Problema'}.`
-          : `Test support: ${botState.item || 'Issue'}.`;
-        queueMessages([{ text: currentLang === 'pt' ? 'Abrindo WhatsApp para o chamado.' : 'Opening WhatsApp for the ticket.', who: 'bot' }]);
-        openWhatsApp(text);
+        clearStatusTimers();
+        const ticketId = generateId('TCK');
+        queueMessages([
+          { text: t(`Ticket ${ticketId} aberto.`, `Ticket ${ticketId} opened.`), who: 'bot' },
+          { text: t('Equipe técnica recebeu e está analisando.', 'The technical team received it and is reviewing.'), who: 'bot' }
+        ]);
+        scheduleStatus(
+          [
+            t('Atualização: técnico em rota.', 'Update: technician on the way.'),
+            summarizeCustomer(t(`Problema: ${botState.item || 'Problema'}.`, `Issue: ${botState.item || 'Issue'}.`))
+          ],
+          5000
+        );
         setMenu('main');
         return;
       }
@@ -540,6 +624,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (action === 'security') {
         botState.flow = 'security';
         botState.item = null;
+        clearStatusTimers();
         queueMessages([{ text: currentLang === 'pt' ? 'Segurança selecionada. Qual situação?' : 'Security selected. Which situation?', who: 'bot' }]);
         setMenu('security');
         return;
@@ -553,6 +638,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         botState.flow = 'security';
         botState.item = secMap[action] || (currentLang === 'pt' ? 'Solicitação' : 'Request');
+        clearStatusTimers();
         const reply = currentLang === 'pt'
           ? `Registro simulado: ${botState.item}.`
           : `Simulated ticket: ${botState.item}.`;
@@ -562,11 +648,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (action === 'sec_confirm') {
-        const text = currentLang === 'pt'
-          ? `Segurança teste: ${botState.item || 'Solicitação'}.`
-          : `Security test: ${botState.item || 'Request'}.`;
-        queueMessages([{ text: currentLang === 'pt' ? 'Abrindo WhatsApp para atendimento.' : 'Opening WhatsApp for service.', who: 'bot' }]);
-        openWhatsApp(text);
+        clearStatusTimers();
+        const osId = generateId('OS');
+        queueMessages([
+          { text: t(`Ordem de serviço ${osId} gerada.`, `Service order ${osId} created.`), who: 'bot' },
+          { text: t('Equipe de segurança acionada.', 'Security team engaged.'), who: 'bot' }
+        ]);
+        scheduleStatus(
+          [
+            t('Atualização: atendente em contato.', 'Update: agent reaching out.'),
+            summarizeCustomer(t(`Solicitação: ${botState.item || 'Solicitação'}.`, `Request: ${botState.item || 'Request'}.`))
+          ],
+          5000
+        );
         setMenu('main');
         return;
       }
@@ -623,6 +717,12 @@ document.addEventListener('DOMContentLoaded', () => {
   botStart.addEventListener('click', startBot);
   menuButtons.forEach((btn) => {
     btn.addEventListener('click', () => handleAction(btn.dataset.action));
+  });
+  botSend.addEventListener('click', sendName);
+  botInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      sendName();
+    }
   });
 
   setLang(currentLang);

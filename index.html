@@ -227,7 +227,11 @@
             <button class='chip' data-bot-index='3'>4 - Falar com humano</button>
           </div>
           <div class='bot-footer'>
-            <p class='bot-hint' data-i18n='bot_hint'>Clique em iniciar para simular o atendimento.</p>
+            <p class='bot-hint' data-i18n='bot_hint'>Clique em iniciar e escolha uma opção numerada.</p>
+            <div class='bot-input is-hidden' id='bot-input-wrap'>
+              <input id='bot-input' type='text' placeholder='Digite seu nome' autocomplete='off'>
+              <button class='btn btn-outline' id='bot-send'>Enviar</button>
+            </div>
             <button class='btn btn-primary' id='bot-start' data-i18n='bot_start'>Iniciar teste</button>
           </div>
         </div>
