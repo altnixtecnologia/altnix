@@ -370,19 +370,65 @@ section {
 }
 
 .speed-proof {
-  padding: 50px 0 30px;
+  padding: 60px 0 40px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(39, 80, 120, 0.05), rgba(19, 188, 125, 0.06));
 }
 
 .speed-card {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
   gap: 24px;
   padding: 28px;
   border-radius: 22px;
   background: var(--white);
-  border: 1px solid var(--border);
+  border: 1px solid transparent;
   box-shadow: var(--shadow);
   align-items: center;
+  overflow: hidden;
+}
+
+.speed-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(120deg, rgba(39, 80, 120, 0.4), rgba(19, 188, 125, 0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.speed-card::after {
+  content: '';
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(19, 188, 125, 0.3) 0%, rgba(19, 188, 125, 0) 70%);
+  top: -120px;
+  right: -120px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.speed-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(39, 80, 120, 0.12);
+  color: var(--primary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
 }
 
 .speed-card h2 {
@@ -406,10 +452,11 @@ section {
 .speed-chips span {
   padding: 8px 16px;
   border-radius: 999px;
-  background: rgba(39, 80, 120, 0.08);
+  background: rgba(39, 80, 120, 0.1);
   color: var(--primary);
   font-weight: 700;
   font-size: 0.85rem;
+  box-shadow: 0 12px 24px rgba(39, 80, 120, 0.12);
 }
 
 .hero-card-top h3 {
