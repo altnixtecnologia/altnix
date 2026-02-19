@@ -43,13 +43,12 @@
           <h1 data-i18n='hero_title'>Proteção e automação que vendem antes da concorrência.</h1>
           <p class='lead' data-i18n='hero_subtitle'>Informática, segurança eletrônica e sistemas inteligentes com bots de WhatsApp. Do primeiro contato ao fechamento — com velocidade e confiança.</p>
           <div class='hero-ctas'>
-            <a class='btn btn-primary' href='https://wa.me/5548991004780' data-i18n='cta_whatsapp'>Falar no WhatsApp</a>
-            <a class='btn btn-outline' href='#bot' data-i18n='cta_test_bot'>Testar o bot</a>
+            <a class='btn btn-primary' href='https://wa.me/5548991004780' data-i18n='cta_demo_now'>Agendar demo agora</a>
           </div>
-          <div class='hero-chips'>
-            <span data-i18n='hero_stat_1'>Resposta rápida</span>
-            <span data-i18n='hero_stat_2'>Instalação e manutenção</span>
-            <span data-i18n='hero_stat_3'>Soluções sob medida</span>
+          <div class='hero-chips hero-proof'>
+            <span data-i18n='hero_metric_1'>+X instalações</span>
+            <span data-i18n='hero_metric_2'>SLA 24/7</span>
+            <span data-i18n='hero_metric_3'>Resposta média em 3 min</span>
           </div>
         </div>
         <div class='hero-card'>
@@ -81,7 +80,48 @@
               </div>
             </div>
           </div>
-          <a class='btn btn-light' href='https://wa.me/5548991004780' data-i18n='cta_talk_team'>Falar com a equipe</a>
+        </div>
+      </div>
+    </section>
+
+    <section class='speed-proof'>
+      <div class='container'>
+        <div class='speed-card'>
+          <div>
+            <h2 data-i18n='speed_title'>Quanto mais rápido, maior a conversão</h2>
+            <p data-i18n='speed_body'>Resposta imediata com chatbot. Isso gera mais vendas e menos perda por atraso.</p>
+          </div>
+          <div class='speed-chips'>
+            <span data-i18n='speed_chip_1'>Resposta imediata</span>
+            <span data-i18n='speed_chip_2'>+35% mais vendas</span>
+            <span data-i18n='speed_chip_3'>-25% menos perda</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class='trust'>
+      <div class='container'>
+        <div class='section-head'>
+          <h2 data-i18n='trust_title'>Compromissos que geram confiança</h2>
+        </div>
+        <div class='trust-grid'>
+          <article class='trust-item'>
+            <h3 data-i18n='trust_1_title'>Processo claro</h3>
+            <p data-i18n='trust_1_body'>Diagnóstico, implantação e monitoramento sem ruído.</p>
+          </article>
+          <article class='trust-item'>
+            <h3 data-i18n='trust_2_title'>Garantia e SLA</h3>
+            <p data-i18n='trust_2_body'>Atendimento com prazos definidos e acompanhamento ativo.</p>
+          </article>
+          <article class='trust-item'>
+            <h3 data-i18n='trust_3_title'>Suporte contínuo</h3>
+            <p data-i18n='trust_3_body'>WhatsApp direto com equipe técnica e registros claros.</p>
+          </article>
+          <article class='trust-item'>
+            <h3 data-i18n='trust_4_title'>Equipe técnica</h3>
+            <p data-i18n='trust_4_body'>Instalação, manutenção e respostas rápidas no local.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -186,6 +226,26 @@
       </div>
     </section>
 
+    <section class='showcase' id='showcase'>
+      <div class='container showcase-grid'>
+        <div>
+          <div class='section-head'>
+            <h2 data-i18n='showcase_title'>Veja o módulo em ação</h2>
+            <p data-i18n='showcase_subtitle'>Vídeo curto mostrando validação visual e resposta rápida.</p>
+          </div>
+          <a class='btn btn-primary' href='https://wa.me/5548991004780' data-i18n='showcase_cta'>Solicitar demo no WhatsApp</a>
+        </div>
+        <div class='showcase-card'>
+          <div class='showcase-media'>
+            <span class='showcase-tag' data-i18n='showcase_tag'>Vídeo 20–30s</span>
+            <h3 data-i18n='showcase_placeholder_title'>Insira o vídeo de demonstração</h3>
+            <p data-i18n='showcase_placeholder_body'>Envie o arquivo e substituiremos este espaço pelo vídeo real.</p>
+            <div class='showcase-play'>▶</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class='bot' id='bot'>
       <div class='container bot-grid'>
         <div class='bot-copy'>
@@ -221,9 +281,9 @@
           </div>
           <div class='bot-feed' id='bot-feed' aria-live='polite'></div>
           <div class='bot-actions' id='bot-actions'>
-            <button class='chip' data-bot-index='0'>1 - Pedido de comida</button>
-            <button class='chip' data-bot-index='1'>2 - Suporte técnico</button>
-            <button class='chip' data-bot-index='2'>3 - Segurança/alarme</button>
+            <button class='chip' data-bot-index='0'>1 - Pedido de pizza</button>
+            <button class='chip' data-bot-index='1'>2 - Ticket de manutenção</button>
+            <button class='chip' data-bot-index='2'>3 - Ordem de serviço</button>
             <button class='chip' data-bot-index='3'>4 - Falar com humano</button>
           </div>
           <div class='bot-footer'>
@@ -232,7 +292,10 @@
               <input id='bot-input' type='text' placeholder='Digite seu nome' autocomplete='off'>
               <button class='btn btn-outline' id='bot-send'>Enviar</button>
             </div>
-            <button class='btn btn-primary' id='bot-start' data-i18n='bot_start'>Iniciar teste</button>
+            <div class='bot-footer-actions'>
+              <button class='btn btn-ghost' id='bot-reset'>Reiniciar</button>
+              <button class='btn btn-primary' id='bot-start' data-i18n='bot_start'>Iniciar teste</button>
+            </div>
           </div>
         </div>
       </div>
@@ -250,27 +313,111 @@
             <div>
               <h3 data-i18n='process_step_1_title'>Diagnóstico</h3>
               <p data-i18n='process_step_1_body'>Mapeamos sua operação e pontos de risco.</p>
+              <a class='link' href='https://wa.me/5548991004780' data-i18n='process_step_1_cta'>Agendar diagnóstico</a>
             </div>
           </article>
           <article class='step'>
             <span>02</span>
             <div>
               <h3 data-i18n='process_step_2_title'>Projeto</h3>
-              <p data-i18n='process_step_2_body'>Desenhamos a solução sob medida.</p>
+              <p data-i18n='process_step_2_body'>Desenhamos e implantamos a solução sob medida.</p>
+              <a class='link' href='https://wa.me/5548991004780' data-i18n='process_step_2_cta'>Solicitar instalação</a>
             </div>
           </article>
           <article class='step'>
             <span>03</span>
             <div>
-              <h3 data-i18n='process_step_3_title'>Instalação</h3>
-              <p data-i18n='process_step_3_body'>Implementação rápida com mínimo impacto.</p>
+              <h3 data-i18n='process_step_3_title'>Monitoramento</h3>
+              <p data-i18n='process_step_3_body'>Operação contínua com SLA e melhorias constantes.</p>
+              <a class='link' href='https://wa.me/5548991004780' data-i18n='process_step_3_cta'>Ativar monitoramento</a>
             </div>
           </article>
-          <article class='step'>
-            <span>04</span>
-            <div>
-              <h3 data-i18n='process_step_4_title'>Suporte contínuo</h3>
-              <p data-i18n='process_step_4_body'>Monitoramento, ajustes e evolução.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class='plans' id='plans'>
+      <div class='container'>
+        <div class='section-head'>
+          <h2 data-i18n='plans_title'>Planos sob medida</h2>
+          <p data-i18n='plans_subtitle'>Negociação e proposta diretamente pelo WhatsApp.</p>
+        </div>
+        <div class='plans-grid'>
+          <article class='plan-card'>
+            <h3 data-i18n='plan_1_title'>Essencial</h3>
+            <p class='plan-price' data-i18n='plan_price_contact'>Sob consulta</p>
+            <ul class='plan-list'>
+              <li data-i18n='plan_1_feat_1'>Implantação rápida e orientação inicial.</li>
+              <li data-i18n='plan_1_feat_2'>Bot e WhatsApp configurados.</li>
+              <li data-i18n='plan_1_feat_3'>Suporte padrão em horário comercial.</li>
+            </ul>
+            <a class='btn btn-outline' href='https://wa.me/5548991004780' data-i18n='plan_cta'>Falar no WhatsApp</a>
+          </article>
+          <article class='plan-card is-featured'>
+            <h3 data-i18n='plan_2_title'>Profissional</h3>
+            <p class='plan-price' data-i18n='plan_price_contact'>Sob consulta</p>
+            <ul class='plan-list'>
+              <li data-i18n='plan_2_feat_1'>Módulo de verificação inteligente.</li>
+              <li data-i18n='plan_2_feat_2'>Fluxos por setor e equipe dedicada.</li>
+              <li data-i18n='plan_2_feat_3'>SLA estendido e acompanhamento ativo.</li>
+            </ul>
+            <a class='btn btn-primary' href='https://wa.me/5548991004780' data-i18n='plan_cta'>Falar no WhatsApp</a>
+          </article>
+          <article class='plan-card'>
+            <h3 data-i18n='plan_3_title'>Enterprise</h3>
+            <p class='plan-price' data-i18n='plan_price_contact'>Sob consulta</p>
+            <ul class='plan-list'>
+              <li data-i18n='plan_3_feat_1'>Integrações avançadas e APIs.</li>
+              <li data-i18n='plan_3_feat_2'>Operação 24/7 com níveis críticos.</li>
+              <li data-i18n='plan_3_feat_3'>Gestão de múltiplas unidades.</li>
+            </ul>
+            <a class='btn btn-outline' href='https://wa.me/5548991004780' data-i18n='plan_cta'>Falar no WhatsApp</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class='faq' id='faq'>
+      <div class='container'>
+        <div class='section-head'>
+          <h2 data-i18n='faq_title'>Dúvidas frequentes</h2>
+          <p data-i18n='faq_subtitle'>Respostas diretas para avançar rápido.</p>
+        </div>
+        <div class='faq-list'>
+          <article class='faq-item'>
+            <button class='faq-question' aria-expanded='false'>
+              <span data-i18n='faq_q1'>Quanto tempo leva para começar?</span>
+              <span class='faq-icon'>+</span>
+            </button>
+            <div class='faq-answer' hidden>
+              <p data-i18n='faq_a1'>Fazemos diagnóstico, proposta e implantação em etapas rápidas. O prazo final depende do escopo e do local.</p>
+            </div>
+          </article>
+          <article class='faq-item'>
+            <button class='faq-question' aria-expanded='false'>
+              <span data-i18n='faq_q2'>O bot pode direcionar para equipes diferentes?</span>
+              <span class='faq-icon'>+</span>
+            </button>
+            <div class='faq-answer' hidden>
+              <p data-i18n='faq_a2'>Sim. Configuramos filas por setor (comercial, suporte, emergência) com regras claras.</p>
+            </div>
+          </article>
+          <article class='faq-item'>
+            <button class='faq-question' aria-expanded='false'>
+              <span data-i18n='faq_q3'>O módulo funciona com câmeras e alarmes existentes?</span>
+              <span class='faq-icon'>+</span>
+            </button>
+            <div class='faq-answer' hidden>
+              <p data-i18n='faq_a3'>Integramos com estruturas já instaladas sempre que possível, ajustando o fluxo de confirmação visual.</p>
+            </div>
+          </article>
+          <article class='faq-item'>
+            <button class='faq-question' aria-expanded='false'>
+              <span data-i18n='faq_q4'>Como funciona o suporte?</span>
+              <span class='faq-icon'>+</span>
+            </button>
+            <div class='faq-answer' hidden>
+              <p data-i18n='faq_a4'>Atendimento via WhatsApp, com acompanhamento e registro de chamados.</p>
             </div>
           </article>
         </div>
@@ -303,11 +450,36 @@
         <a href='https://wa.me/5548991004780'>WhatsApp</a>
       </div>
       <div>
+        <span data-i18n='footer_social'>Social</span>
+        <a href='https://instagram.com/altnixtecnologia' target='_blank' rel='noopener'>Instagram: @altnixtecnologia</a>
+        <a href='https://facebook.com/altnixtecnologia' target='_blank' rel='noopener'>Facebook: @altnixtecnologia</a>
+      </div>
+      <div class='footer-legal'>
+        <span data-i18n='footer_legal'>Legal</span>
+        <p class='footer-meta'>
+          <span class='footer-label' data-i18n='footer_cnpj_label'>CNPJ</span> 52.691.191/0001-89
+        </p>
+        <p class='footer-meta'>
+          <span class='footer-label' data-i18n='footer_address_label'>Endereço</span>
+          <span class='footer-value' data-i18n='footer_address_value'>Rua Exemplo, 123 - Centro, Cidade/UF</span>
+        </p>
+      </div>
+      <div>
         <span data-i18n='footer_domain'>Domínio</span>
-        <p>altnixtecnologia.info (em breve .com.br)</p>
+        <p data-i18n='footer_domain_value'>altnixtecnologia.info (em breve .com.br)</p>
+      </div>
+    </div>
+    <div class='container footer-bottom'>
+      <span data-i18n='footer_copy'>© 2026 Altnix Tecnologia. Todos os direitos reservados.</span>
+      <div class='footer-links'>
+        <a href='termos.html' data-i18n='footer_terms'>Termos</a>
+        <a href='privacidade.html' data-i18n='footer_privacy'>Privacidade</a>
       </div>
     </div>
   </footer>
+  <a class='whatsapp-float' href='https://wa.me/5548991004780' target='_blank' rel='noopener' aria-label='Falar no WhatsApp'>
+    <span>WhatsApp</span>
+  </a>
   <script src='js/main.js'></script>
 </body>
 </html>

@@ -1,19 +1,11 @@
 param(
-  [Parameter(Mandatory = $true)]
-  [string]$Host,
+  [string]$RepoUrl = "https://github.com/altnixtecnologia/altnix.git",
 
-  [Parameter(Mandatory = $true)]
-  [string]$User,
+  [string]$Branch = "main",
 
-  [string]$RemotePath = "/var/www/altnix",
+  [string]$Message,
 
-  [string]$LocalPath = (Get-Location).Path,
-
-  [string]$KeyPath = "$env:USERPROFILE\.ssh\id_rsa",
-
-  [int]$Port = 22,
-
-  [switch]$Clean,
+  [string]$RepoPath = $PSScriptRoot,
 
   [switch]$DryRun
 )
@@ -28,57 +20,63 @@ function Assert-Command {
   }
 }
 
-Assert-Command "ssh"
-Assert-Command "scp"
-Assert-Command "tar"
+Assert-Command "git"
 
-if (-not (Test-Path $LocalPath)) {
-  throw "LocalPath não existe: $LocalPath"
+if (-not (Test-Path $RepoPath)) {
+  throw "RepoPath não existe: $RepoPath"
 }
 
-$timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
-$archiveName = "altnix-site-$timestamp.tgz"
-$archivePath = Join-Path $env:TEMP $archiveName
-
-$excludeArgs = @(
-  "--exclude=.git",
-  "--exclude=.vscode",
-  "--exclude=node_modules",
-  "--exclude=deploy.ps1"
-)
-
-Write-Host "Criando pacote: $archivePath"
-if (-not $DryRun) {
-  Push-Location $LocalPath
+$repoRoot = $RepoPath
+if (-not (Test-Path (Join-Path $repoRoot ".git"))) {
   try {
-    & tar @excludeArgs -czf $archivePath .
-  } finally {
-    Pop-Location
+    $repoRoot = (& git -C $RepoPath rev-parse --show-toplevel).Trim()
+  } catch {
+    throw "Não encontrei repositório git em $RepoPath"
   }
 }
 
-$remoteArchive = "/tmp/$archiveName"
-$sshArgs = @("-i", $KeyPath, "-p", $Port)
-$scpArgs = @("-i", $KeyPath, "-P", $Port)
+$originUrl = $null
+try {
+  $originUrl = (& git -C $repoRoot remote get-url origin).Trim()
+} catch {
+  $originUrl = $null
+}
 
-Write-Host "Enviando pacote para $User@$Host:$remoteArchive"
+if (-not $originUrl) {
+  Write-Host "Configurando remote origin..."
+  if (-not $DryRun) {
+    & git -C $repoRoot remote add origin $RepoUrl
+  }
+} elseif ($originUrl -ne $RepoUrl) {
+  Write-Host "Atualizando remote origin..."
+  if (-not $DryRun) {
+    & git -C $repoRoot remote set-url origin $RepoUrl
+  }
+}
+
+$changes = & git -C $repoRoot status --porcelain
+if ($changes) {
+  if (-not $Message) {
+    $Message = Read-Host "Digite a mensagem do commit"
+  }
+  if (-not $Message) {
+    throw "Mensagem de commit não informada."
+  }
+  Write-Host "Adicionando arquivos..."
+  if (-not $DryRun) {
+    & git -C $repoRoot add -A
+  }
+  Write-Host "Criando commit..."
+  if (-not $DryRun) {
+    & git -C $repoRoot commit -m $Message
+  }
+} else {
+  Write-Host "Nada para commitar."
+}
+
+Write-Host "Enviando para o GitHub..."
 if (-not $DryRun) {
-  & scp @scpArgs $archivePath "$User@$Host:$remoteArchive"
+  & git -C $repoRoot push origin "HEAD:$Branch"
 }
 
-$remoteCmds = @()
-if ($Clean) {
-  $remoteCmds += "rm -rf $RemotePath/*"
-}
-$remoteCmds += "mkdir -p $RemotePath"
-$remoteCmds += "tar -xzf $remoteArchive -C $RemotePath"
-$remoteCmds += "rm -f $remoteArchive"
-
-$remoteCommand = $remoteCmds -join " && "
-
-Write-Host "Aplicando no servidor..."
-if (-not $DryRun) {
-  & ssh @sshArgs "$User@$Host" $remoteCommand
-}
-
-Write-Host "Deploy concluído."
+Write-Host "Push concluído."
