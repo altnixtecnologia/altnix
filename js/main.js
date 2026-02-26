@@ -879,7 +879,9 @@ document.addEventListener('DOMContentLoaded', () => {
         {
           text: `Total final: ${formatBRL(getTotal())} | Previsão: ${botState.estimatedMinutes} min.`,
           who: 'bot'
-        }
+        },
+        { text: '👨‍🍳 Seu pedido já foi enviado para a cozinha e está em preparo.', who: 'bot' },
+        { text: `Obrigado pelo pedido, ${getCustomerName()}! 💙`, who: 'bot' }
       ]);
 
       askWhatsAppConsent(resumo, () => {
@@ -1003,6 +1005,16 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
         sendCartSummary();
+        if (!botState.deliveryType) {
+          queueMessages([{ text: 'Para continuar, escolha o tipo de entrega.', who: 'bot' }]);
+          setMenu('delivery_menu', { reset: true });
+          return;
+        }
+        if (!botState.paymentMethod) {
+          queueMessages([{ text: 'Agora escolha a forma de pagamento.', who: 'bot' }]);
+          setMenu('payment_menu', { reset: true });
+          return;
+        }
         setMenu('checkout_menu', { reset: true });
         return;
       }
@@ -1016,17 +1028,19 @@ document.addEventListener('DOMContentLoaded', () => {
       if (action === 'delivery') {
         botState.deliveryType = 'delivery';
         botState.deliveryFee = 8.9;
+        setMenu('payment_menu', { reset: true });
         if (!botState.address) {
+          queueMessages([{ text: 'Entrega selecionada. Informe seu endereço e, em seguida, escolha a forma de pagamento:', who: 'bot' }]);
           showInput('address', () => {
             queueMessages([{ text: `Entrega definida para: ${botState.address}`, who: 'bot' }]);
             sendCartSummary();
-            setMenu('checkout_menu', { reset: true });
           });
           return;
         }
         queueMessages([{ text: `Entrega definida para: ${botState.address}`, who: 'bot' }]);
         sendCartSummary();
-        setMenu('checkout_menu', { reset: true });
+        queueMessages([{ text: 'Perfeito. Agora escolha a forma de pagamento:', who: 'bot' }]);
+        setMenu('payment_menu', { reset: true });
         return;
       }
 
@@ -1035,11 +1049,17 @@ document.addEventListener('DOMContentLoaded', () => {
         botState.deliveryFee = 0;
         queueMessages([{ text: 'Retirada no balcão selecionada. Sem taxa de entrega.', who: 'bot' }]);
         sendCartSummary();
-        setMenu('checkout_menu', { reset: true });
+        queueMessages([{ text: 'Perfeito. Agora escolha a forma de pagamento:', who: 'bot' }]);
+        setMenu('payment_menu', { reset: true });
         return;
       }
 
       if (action === 'set_payment') {
+        if (!botState.deliveryType) {
+          queueMessages([{ text: 'Antes do pagamento, escolha o tipo de entrega.', who: 'bot' }]);
+          setMenu('delivery_menu', { reset: true });
+          return;
+        }
         queueMessages([{ text: 'Escolha a forma de pagamento:', who: 'bot' }]);
         setMenu('payment_menu', { push: true });
         return;
