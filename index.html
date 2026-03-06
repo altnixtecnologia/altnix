@@ -18,7 +18,7 @@
       width: 56px;
       height: 56px;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
+      background: linear-gradient(135deg, #1f6f54, #20c174);
       color: #fff;
       text-decoration: none;
       display: inline-flex;
@@ -68,62 +68,52 @@
     }
   </style>
   <style>
-    .whatsapp-float {
-      position: fixed;
-      right: 22px;
-      bottom: 22px;
-      width: 58px;
-      height: 58px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #1f6f54, #20c174);
-      box-shadow: 0 14px 28px rgba(16, 45, 73, 0.35);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: transparent;
-      font-size: 0;
-      text-decoration: none;
-      overflow: visible;
-      z-index: 60;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    .automation-lines {
+      margin-top: 16px;
+      display: grid;
+      gap: 8px;
     }
 
-    .whatsapp-float:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 32px rgba(16, 45, 73, 0.42);
+    .automation-lines p {
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 12px;
+      background: rgba(39, 80, 120, 0.07);
+      color: #18324f;
+      font-size: 0.94rem;
+      line-height: 1.35;
     }
 
-    .whatsapp-float::before {
-      content: "";
-      width: 28px;
-      height: 28px;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='white' d='M16 3.2c-7.1 0-12.8 5.3-12.8 12 0 2.1.6 4.1 1.7 5.9L3 29l8.1-2.2c1.5.7 3.2 1.1 4.9 1.1 7.1 0 12.8-5.3 12.8-12S23.1 3.2 16 3.2zm0 22.5c-1.6 0-3.2-.4-4.5-1.1l-.3-.2-4.8 1.3 1.3-4.6-.2-.3c-1-1.4-1.5-3-1.5-4.7 0-4.9 4.4-8.9 9.9-8.9s9.9 4 9.9 8.9-4.4 8.9-9.9 8.9zm5.3-6.5c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-.9 1.2-.3.3-.6.1c-1.9-.9-3.1-1.6-4.4-3.6-.3-.5.3-.5.8-1.6.1-.2 0-.4-.1-.6s-.7-1.6-1-2.2c-.3-.6-.6-.5-.7-.5h-.6c-.2 0-.6.1-.9.4s-1.2 1.1-1.2 2.7 1.2 3.1 1.3 3.3c.1.2 2.4 3.7 5.8 5.2.8.4 1.4.6 1.9.7.8.2 1.6.2 2.2.1.7-.1 2.1-.8 2.4-1.6.3-.8.3-1.4.2-1.6s-.2-.2-.5-.4z'/%3E%3C/svg%3E");
+    .solution-lines {
+      margin-top: 16px;
+      display: grid;
+      gap: 8px;
     }
 
-    .whatsapp-float::after {
-      content: "Entrar em contato";
-      position: absolute;
-      right: 72px;
-      top: 50%;
-      transform: translateY(-50%) translateX(6px);
-      padding: 9px 13px;
-      border-radius: 999px;
-      background: #0a1a2b;
-      color: #fff;
-      font-size: 0.85rem;
-      font-weight: 600;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
+    .solution-lines p {
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 12px;
+      background: rgba(39, 80, 120, 0.07);
+      color: #18324f;
+      font-size: 0.94rem;
+      line-height: 1.35;
     }
 
-    .whatsapp-float:hover::after {
-      opacity: 1;
-      transform: translateY(-50%) translateX(0);
+    .value-lines {
+      margin-top: 16px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .value-lines p {
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 12px;
+      background: rgba(39, 80, 120, 0.07);
+      color: #18324f;
+      font-size: 0.94rem;
+      line-height: 1.35;
     }
   </style>
 </head>
@@ -175,7 +165,7 @@
               <span>01</span>
               <div>
                 <strong data-i18n='process_step_1_title'>Entendimento da necessidade</strong>
-                <p data-i18n='process_step_1_body'>Analisamos o atendimento e identificamos pontos de melhoria.</p>
+                <p data-i18n='process_step_1_body'>Analisamos a demanda e definimos o melhor fluxo para a operação.</p>
               </div>
             </div>
             <div class='flow-step'>
@@ -232,12 +222,12 @@
         <div class='segment-grid'>
           <div class='segment-controls'>
             <button class='segment-btn is-active' data-segment='condominio' data-i18n='segment_condo'>Condomínios</button>
-            <button class='segment-btn' data-segment='empresa' data-i18n='segment_company'>Empresas</button>
-            <button class='segment-btn' data-segment='residencia' data-i18n='segment_home'>Residências</button>
+            <button class='segment-btn' data-segment='empresa' data-i18n='segment_company'>Empresas e serviços</button>
+            <button class='segment-btn' data-segment='residencia' data-i18n='segment_home'>Comércio e varejo</button>
           </div>
           <div class='segment-panel'>
             <h3 id='segment-panel-title'>Condomínios</h3>
-            <p id='segment-panel-body'>Atendimento organizado, solicitações claras e comunicação contínua.</p>
+            <p id='segment-panel-body'>Atendimento de moradores, registro de ocorrências, liberação de acessos e comunicação imediata com mais organização e rastreabilidade.</p>
             <div class='segment-tags'>
               <span data-i18n='segment_tag_1'>Agilidade</span>
               <span data-i18n='segment_tag_2'>Automação</span>
@@ -257,30 +247,46 @@
           <span data-i18n='segment_example_9'>Assistências técnicas</span>
           <span data-i18n='segment_example_10'>Educação</span>
         </div>
+        <p class='segment-note' data-i18n='segment_note'>A solução é adaptável para condomínios, comércios, empresas de serviços, clínicas, assistências técnicas, indústrias, imobiliárias e qualquer operação que precise de atendimento prático, organizado e imediato.</p>
       </div>
     </section>
 
     <section class='values'>
       <div class='container'>
         <div class='section-head'>
-          <h2 data-i18n='value_title'>Seu atendimento está assim?</h2>
-          <p data-i18n='value_subtitle'>Problemas pequenos viram perda de vendas e desorganização do negócio.</p>
+          <h2 data-i18n='value_title'>Seu atendimento está fazendo sua empresa perder dinheiro?</h2>
+          <p data-i18n='value_subtitle'>Demora no retorno, mensagens acumuladas e falta de organização fazem clientes desistirem todos os dias.</p>
         </div>
         <div class='card-grid'>
           <article class='card'>
             <span class='card-icon'>01</span>
-            <h3 data-i18n='value_1_title'>Clientes esperando</h3>
-            <p data-i18n='value_1_body'>Tempo de resposta alto e perda de oportunidades.</p>
+            <h3 data-i18n='value_1_title'>Demora no retorno</h3>
+            <p data-i18n='value_1_body'>Cada minuto de espera aumenta a chance de o cliente fechar com outra empresa e abandonar o seu atendimento.</p>
+            <div class='value-lines'>
+              <p data-i18n='value_1_line_1'>O interesse do cliente esfria rapidamente</p>
+              <p data-i18n='value_1_line_2'>A concorrência responde antes</p>
+              <p data-i18n='value_1_line_3'>Cada minuto sem retorno reduz conversão</p>
+            </div>
           </article>
           <article class='card'>
             <span class='card-icon'>02</span>
-            <h3 data-i18n='value_2_title'>Mensagens acumuladas</h3>
-            <p data-i18n='value_2_body'>WhatsApp lotado e informações repetidas.</p>
+            <h3 data-i18n='value_2_title'>Falta de resposta</h3>
+            <p data-i18n='value_2_body'>Mensagens sem retorno viram vendas perdidas e passam desorganização para clientes atuais e novos.</p>
+            <div class='value-lines'>
+              <p data-i18n='value_2_line_1'>Pedidos ficam sem acompanhamento</p>
+              <p data-i18n='value_2_line_2'>O cliente perde confiança no atendimento</p>
+              <p data-i18n='value_2_line_3'>A empresa transmite desorganização</p>
+            </div>
           </article>
           <article class='card'>
             <span class='card-icon'>03</span>
-            <h3 data-i18n='value_3_title'>Oportunidades perdidas</h3>
-            <p data-i18n='value_3_body'>Pedidos e solicitações se perdem no fluxo.</p>
+            <h3 data-i18n='value_3_title'>Perda diária de dinheiro</h3>
+            <p data-i18n='value_3_body'>Sem automação, sua empresa perde tempo valioso, oportunidades e faturamento todos os dias, de forma contínua.</p>
+            <div class='value-lines'>
+              <p data-i18n='value_3_line_1'>Mais tempo gasto com tarefas repetitivas</p>
+              <p data-i18n='value_3_line_2'>Menos produtividade da equipe</p>
+              <p data-i18n='value_3_line_3'>Menos vendas e menor rentabilidade</p>
+            </div>
           </article>
         </div>
       </div>
@@ -296,18 +302,42 @@
           <article class='card'>
             <h3 data-i18n='solution_1_title'>Resposta imediata</h3>
             <p data-i18n='solution_1_body'>Seu cliente recebe retorno no mesmo instante.</p>
+            <div class='solution-lines'>
+              <p data-i18n='solution_1_line_1'>Atendimento sem fila de espera</p>
+              <p data-i18n='solution_1_line_2'>Respostas a qualquer hora sem limite de horário</p>
+              <p data-i18n='solution_1_line_3'>Mais agilidade no primeiro contato</p>
+              <p data-i18n='solution_1_line_4'>Melhor experiência do cliente</p>
+            </div>
           </article>
           <article class='card'>
             <h3 data-i18n='solution_2_title'>Organização automática</h3>
-            <p data-i18n='solution_2_body'>Pedidos e solicitações organizados sem esforço manual.</p>
+            <p data-i18n='solution_2_body'>Pedidos e solicitações organizados sem retrabalho.</p>
+            <div class='solution-lines'>
+              <p data-i18n='solution_2_line_1'>Informações centralizadas em um só lugar</p>
+              <p data-i18n='solution_2_line_2'>Menos retrabalho no dia a dia</p>
+              <p data-i18n='solution_2_line_3'>Solicitações mais bem registradas</p>
+              <p data-i18n='solution_2_line_4'>Mais controle sobre a operação</p>
+            </div>
           </article>
           <article class='card'>
             <h3 data-i18n='solution_3_title'>Triagem inteligente</h3>
-            <p data-i18n='solution_3_body'>Cada cliente segue o melhor caminho com contexto completo.</p>
+            <p data-i18n='solution_3_body'>Cada cliente segue o melhor caminho com clareza.</p>
+            <div class='solution-lines'>
+              <p data-i18n='solution_3_line_1'>Encaminhamento mais preciso</p>
+              <p data-i18n='solution_3_line_2'>Contexto antes do atendimento humano</p>
+              <p data-i18n='solution_3_line_3'>Mais rapidez na tomada de decisão</p>
+              <p data-i18n='solution_3_line_4'>Redução de falhas no processo</p>
+            </div>
           </article>
           <article class='card'>
-            <h3 data-i18n='solution_4_title'>Direcionamento por setor</h3>
-            <p data-i18n='solution_4_body'>Cada cliente vai para o time correto com contexto completo.</p>
+            <h3 data-i18n='solution_4_title'>Segmentado por setor</h3>
+            <p data-i18n='solution_4_body'>Cada cliente vai para o time correto sem confusão.</p>
+            <div class='solution-lines'>
+              <p data-i18n='solution_4_line_1'>Projetos sob medida para cada operação</p>
+              <p data-i18n='solution_4_line_2'>Controle de dados e processos</p>
+              <p data-i18n='solution_4_line_3'>Acesso online com mais praticidade</p>
+              <p data-i18n='solution_4_line_4'>Suporte contínuo para evolução</p>
+            </div>
           </article>
         </div>
       </div>
@@ -323,14 +353,29 @@
           <article class='card'>
             <h3 data-i18n='bot_type_1_title'>Regras</h3>
             <p data-i18n='bot_type_1_body'>Fluxos definidos para processos previsíveis.</p>
+            <div class='automation-lines'>
+              <p data-i18n='bot_type_1_line_1'>Respostas padronizadas</p>
+              <p data-i18n='bot_type_1_line_2'>Fluxo controlado por etapas</p>
+              <p data-i18n='bot_type_1_line_3'>Ideal para rotinas objetivas</p>
+            </div>
           </article>
           <article class='card'>
             <h3 data-i18n='bot_type_2_title'>Inteligência Artificial</h3>
-            <p data-i18n='bot_type_2_body'>Entende intenção e adapta respostas com contexto.</p>
+            <p data-i18n='bot_type_2_body'>Entende intenção e adapta respostas.</p>
+            <div class='automation-lines'>
+              <p data-i18n='bot_type_2_line_1'>Interpretação de contexto</p>
+              <p data-i18n='bot_type_2_line_2'>Respostas mais naturais</p>
+              <p data-i18n='bot_type_2_line_3'>Mais flexibilidade no atendimento</p>
+            </div>
           </article>
           <article class='card'>
             <h3 data-i18n='bot_type_3_title'>Híbrido</h3>
             <p data-i18n='bot_type_3_body'>Regras + IA para controle e flexibilidade.</p>
+            <div class='automation-lines'>
+              <p data-i18n='bot_type_3_line_1'>Controle com inteligência</p>
+              <p data-i18n='bot_type_3_line_2'>Triagem mais precisa</p>
+              <p data-i18n='bot_type_3_line_3'>Equilíbrio entre padrão e adaptação</p>
+            </div>
           </article>
         </div>
       </div>
@@ -340,19 +385,19 @@
       <div class='container mvi-grid'>
         <div>
           <div class='section-head'>
-            <h2 data-i18n='mvi_title'>Módulo de Verificação Inteligente</h2>
-            <p data-i18n='mvi_subtitle'>Em desenvolvimento. Será integrado a câmeras e alarmes para confirmação visual.</p>
+            <h2 data-i18n='mvi_title'>Nova solução em desenvolvimento</h2>
+            <p data-i18n='mvi_subtitle'>Estamos desenvolvendo uma integração entre câmeras, alarmes e gerenciamento direto pelo WhatsApp, trazendo mais praticidade e agilidade no acompanhamento da segurança.</p>
           </div>
           <ul class='checklist'>
-            <li data-i18n='mvi_point_1'>Confirmação visual de disparos em grupo.</li>
-            <li data-i18n='mvi_point_2'>Fluxo inteligente para reduzir falsos alarmes.</li>
-            <li data-i18n='mvi_point_3'>Integração com câmeras, alarmes e sistemas.</li>
-            <li data-i18n='mvi_point_4'>Histórico e rastreabilidade por ocorrência.</li>
+            <li data-i18n='mvi_point_1'>Confirmação visual de disparos e eventos em grupo.</li>
+            <li data-i18n='mvi_point_2'>Gerenciamento de ocorrências e acionamentos via WhatsApp.</li>
+            <li data-i18n='mvi_point_3'>Integração projetada com câmeras, alarmes e sistemas já existentes.</li>
+            <li data-i18n='mvi_point_4'>Projeto em desenvolvimento, já disponível para esclarecimento de dúvidas comerciais e técnicas.</li>
           </ul>
         </div>
         <div class='mvi-panel'>
-          <h3 data-i18n='mvi_panel_title'>Em desenvolvimento</h3>
-          <p data-i18n='mvi_panel_body'>Estamos finalizando a versão integrada para validação visual e acionamento rápido.</p>
+          <h3 data-i18n='mvi_panel_title'>Nova solução em desenvolvimento</h3>
+          <p data-i18n='mvi_panel_body'>A proposta permite receber alertas, validar eventos com imagens e agir rapidamente, tudo em um único canal. A solução ainda está em fase de desenvolvimento, mas já estamos apresentando a proposta para clientes interessados em conhecer essa nova forma de gestão da segurança. Fale com a gente para saber mais e tirar suas dúvidas.</p>
           <div class='mvi-badge' data-i18n='mvi_panel_tag'>Em desenvolvimento</div>
         </div>
       </div>
@@ -589,8 +634,8 @@
   </footer>
   <a class='whatsapp-float' href='https://wa.me/5548991004780' target='_blank' rel='noopener' aria-label='Falar no WhatsApp'>
     <span class='whatsapp-icon' aria-hidden='true'>
-      <svg viewBox='0 0 32 32' role='img' aria-hidden='true'>
-        <path d='M16 3.2c-7.1 0-12.8 5.3-12.8 12 0 2.1.6 4.1 1.7 5.9L3 29l8.1-2.2c1.5.7 3.2 1.1 4.9 1.1 7.1 0 12.8-5.3 12.8-12S23.1 3.2 16 3.2zm0 22.5c-1.6 0-3.2-.4-4.5-1.1l-.3-.2-4.8 1.3 1.3-4.6-.2-.3c-1-1.4-1.5-3-1.5-4.7 0-4.9 4.4-8.9 9.9-8.9s9.9 4 9.9 8.9-4.4 8.9-9.9 8.9zm5.3-6.5c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-.9 1.2-.3.3-.6.1c-1.9-.9-3.1-1.6-4.4-3.6-.3-.5.3-.5.8-1.6.1-.2 0-.4-.1-.6s-.7-1.6-1-2.2c-.3-.6-.6-.5-.7-.5h-.6c-.2 0-.6.1-.9.4s-1.2 1.1-1.2 2.7 1.2 3.1 1.3 3.3c.1.2 2.4 3.7 5.8 5.2.8.4 1.4.6 1.9.7.8.2 1.6.2 2.2.1.7-.1 2.1-.8 2.4-1.6.3-.8.3-1.4.2-1.6s-.2-.2-.5-.4z'/>
+      <svg viewBox='0 0 24 24' role='img' aria-hidden='true'>
+        <path d='M12.043 0C5.396 0 .003 5.392.003 12.04c0 2.122.553 4.196 1.597 6.024L0 24l6.11-1.594a12.03 12.03 0 0 0 5.933 1.51h.005c6.645 0 12.038-5.392 12.038-12.04C24.086 5.392 18.694 0 12.043 0zm6.956 17.513c-.289.812-1.694 1.558-2.334 1.646-.598.08-1.353.114-2.184-.14-.504-.16-1.152-.376-1.99-.738-3.5-1.513-5.786-5.015-5.96-5.244-.175-.23-1.425-1.898-1.425-3.623 0-1.724.9-2.574 1.22-2.926.32-.352.697-.44.93-.44.23 0 .465.003.668.013.214.01.5-.08.78.596.289.708.98 2.445 1.067 2.622.086.176.144.38.029.61-.115.23-.173.38-.346.586-.173.206-.365.46-.52.616-.173.176-.354.368-.152.72.202.352.9 1.487 1.93 2.41 1.326 1.183 2.446 1.55 2.798 1.726.352.176.557.147.758-.088.202-.235.867-1.01 1.096-1.356.23-.352.465-.294.78-.176.317.117 1.99.938 2.334 1.107.346.176.576.264.662.41.086.145.086.84-.202 1.652z'/>
       </svg>
     </span>
     <span class='whatsapp-label'>Entrar em contato</span>
