@@ -487,6 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let botStarted = false;
   let currentMenu = 'main';
   let menuStack = [];
+  let maxBotHeight = 0;
   const botState = {
     userName: null,
     cart: [],
@@ -507,6 +508,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const addressDefaults = {
     pt: 'Rua das Inovações, 120 - Centro',
     en: 'Rua das Inovações, 120 - Centro'
+  };
+
+  const setupBotHeightObserver = () => {
+    const botShell = document.querySelector('.bot-shell');
+    if (!botShell || typeof MutationObserver === 'undefined') {
+      return;
+    }
+    const observer = new MutationObserver(() => syncBotHeight());
+    observer.observe(botShell, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true
+    });
   };
 
   const foodCatalog = {
@@ -539,13 +554,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.innerWidth <= 980) {
       botShell.style.minHeight = '';
       botShell.style.marginTop = '';
+      stageGrid.style.gap = '';
+      maxBotHeight = 0;
       return;
     }
+
     const copyTop = botCopy.getBoundingClientRect().top;
     const stageTop = stageGrid.getBoundingClientRect().top;
     const offset = Math.max(0, stageTop - copyTop);
     botShell.style.marginTop = `${offset}px`;
-    botShell.style.minHeight = `${stageGrid.offsetHeight}px`;
+
+    const botHeight = botShell.scrollHeight;
+    const stageHeight = stageGrid.offsetHeight;
+    maxBotHeight = Math.max(maxBotHeight, botHeight);
+    const targetHeight = Math.max(maxBotHeight, stageHeight);
+    botShell.style.minHeight = `${targetHeight}px`;
+
+    const cards = stageGrid.querySelectorAll('.stage-card').length;
+    const baseGap = parseFloat(getComputedStyle(stageGrid).gap) || 16;
+    if (cards > 1) {
+      const extra = Math.max(0, targetHeight - stageHeight);
+      const gap = baseGap + extra / (cards - 1);
+      stageGrid.style.gap = `${gap}px`;
+    } else {
+      stageGrid.style.gap = `${baseGap}px`;
+    }
   };
 
   const applyI18n = (lang) => {
@@ -1308,6 +1341,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupFaq();
   updateHeaderOffset();
   syncBotHeight();
+  setupBotHeightObserver();
   window.addEventListener('resize', () => {
     updateHeaderOffset();
     syncBotHeight();
