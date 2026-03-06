@@ -626,6 +626,22 @@ section {
   font-weight: 600;
 }
 
+.segment-examples {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.segment-examples span {
+  background: rgba(39, 80, 120, 0.08);
+  color: var(--primary-600);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -731,10 +747,15 @@ section {
 }
 
 .bot-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  display: flex;
   gap: 36px;
-  align-items: start;
+  align-items: stretch;
+}
+
+.bot-copy {
+  flex: 1.02 1 0;
+  min-width: 0;
+  width: 100%;
 }
 
 .stage-grid {
@@ -777,6 +798,13 @@ section {
   padding: 24px;
   display: grid;
   gap: 16px;
+  height: 100%;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  align-self: stretch;
+  flex: 0.98 1 0;
+  min-width: 0;
+  width: 100%;
+  min-height: 100%;
 }
 
 .bot-header {
@@ -1298,6 +1326,14 @@ section {
   .trust-grid,
   .showcase-grid {
     grid-template-columns: 1fr;
+  }
+
+  .bot-grid {
+    flex-direction: column;
+  }
+
+  .bot-grid {
+    flex-direction: column;
   }
 
   .hero-card {
