@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
       nav_bot: 'Simulação',
       nav_process: 'Como funciona',
       nav_contact: 'Contato',
-      hero_eyebrow: 'Tecnologia que organiza seu atendimento',
-      hero_title: 'Tecnologia que organiza o atendimento da sua empresa e responde seus clientes com rapidez.',
-      hero_subtitle: 'Desenvolvemos soluções inteligentes que automatizam processos, organizam informações e garantem atenção imediata, a qualquer momento.',
-      hero_metric_1: '+X instalações',
+  hero_eyebrow: 'Impulsionamos o crescimento do seu negócio',
+      hero_title: 'Seu atendimento<br>mais rápido,<br>organizado e inteligente.<br>Deixe a tecnologia<br>responder seus clientes<br>enquanto sua empresa<br>foca em vender mais.',
+      hero_subtitle: 'Criamos sistemas personalizados que automatizam respostas, organizam conversas e integram processos da sua empresa em um único fluxo digital.',
+      hero_metric_1: 'Plataforma própria',
       hero_metric_2: 'SLA 24/7',
-      hero_metric_3: 'Resposta média em 3 min',
+      hero_metric_3: 'Integração inteligente',
       trust_title: 'Mais eficiência no dia a dia da empresa',
       trust_1_title: 'Resposta imediata',
       trust_1_body: 'Clientes atendidos na hora, sem filas no WhatsApp.',
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mvi_panel_title: 'Nova solução em desenvolvimento',
       mvi_panel_body: 'A proposta permite receber alertas, validar eventos com imagens e agir rapidamente, tudo em um único canal. A solução ainda está em fase de desenvolvimento, mas já estamos apresentando a proposta para clientes interessados em conhecer essa nova forma de gestão da segurança. Fale com a gente para saber mais e tirar suas dúvidas.',
       mvi_panel_tag: 'Em desenvolvimento',
-      mvi_card_title: 'Módulo de verificação inteligente',
+  mvi_card_title: 'Como funciona',
       mvi_card_body: 'Estamos construindo a camada de confirmação visual integrada a câmeras e alarmes.',
       segment_title: 'Para quem é essa solução',
       segment_subtitle: 'Aplicável a diversos tipos de negócio, sempre com desenvolvimento personalizado.',
@@ -655,7 +655,11 @@ document.addEventListener('DOMContentLoaded', () => {
     i18nEls.forEach((el) => {
       const key = el.dataset.i18n;
       if (i18n[lang] && i18n[lang][key]) {
-        el.textContent = i18n[lang][key];
+        if (key === 'hero_title') {
+          el.innerHTML = i18n[lang][key];
+        } else {
+          el.textContent = i18n[lang][key];
+        }
       }
     });
 
